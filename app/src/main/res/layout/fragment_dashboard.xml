@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/purple"
+    tools:context=".ui.dashboard.DashboardFragment">
+
+    <include layout="@layout/layout_header"
+        android:id="@+id/layout_header"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="15dp"
+        android:background="@drawable/top_border"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layout_1"
+            style="@style/match_Wrap_Parent"
+            android:weightSum="2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_recent_transaction"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="120dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/light_purple1"
+                app:cardBackgroundColor="@color/white">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_Parent"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/imgDeliveryHistory"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/transaction"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_delivery_history"
+                        style="@style/match_Wrap_Parent"
+                        android:layout_marginTop="10dp"
+                        android:text="Recent Transaction"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imgDeliveryHistory" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_locate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="120dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/light_purple1"
+                app:cardBackgroundColor="@color/white">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_Parent"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/iv_locate"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/locate"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_locate"
+                        style="@style/match_Wrap_Parent"
+                        android:layout_marginTop="10dp"
+                        android:text="Locate your parcel"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_locate" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_2"
+            style="@style/match_Wrap_Parent"
+            android:weightSum="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_1"
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_network"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="120dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/light_purple1"
+                app:cardBackgroundColor="@color/white">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_Parent"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/iv_network"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/network"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_network"
+                        style="@style/match_Wrap_Parent"
+                        android:layout_marginTop="10dp"
+                        android:text="Our Networks"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_network" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_announcement"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="120dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/light_purple1"
+                app:cardBackgroundColor="@color/white">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_Parent"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/iv_announce"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/announcement"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_announce"
+                        style="@style/match_Wrap_Parent"
+                        android:layout_marginTop="10dp"
+                        android:text="Announcement"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_announce" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_3"
+            style="@style/match_Wrap_Parent"
+            android:weightSum="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_2"
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_helpline"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="120dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/light_purple1"
+                app:cardBackgroundColor="@color/white">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_Parent"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/iv_helpline"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/helpline"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_helpline"
+                        style="@style/match_Wrap_Parent"
+                        android:layout_marginTop="10dp"
+                        android:text="Helpine &amp; Grievance"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_helpline" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
