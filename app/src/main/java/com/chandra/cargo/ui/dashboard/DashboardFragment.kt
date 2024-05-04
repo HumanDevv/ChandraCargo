@@ -29,10 +29,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private var param1: String? = null
     private var param2: String? = null
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,10 +37,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
 
-    override fun getBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentDashboardBinding {
+    override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentDashboardBinding {
         return FragmentDashboardBinding.inflate(layoutInflater)
     }
 

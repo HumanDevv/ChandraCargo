@@ -5,9 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chandra.cargo.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chandra.cargo.base.BaseFragment
 import com.chandra.cargo.databinding.FragmentLocateParcelBinding
+import com.chandra.cargo.ui.dashboard.LocatParcelAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,5 +48,16 @@ class LocateParcelFragment : BaseFragment<FragmentLocateParcelBinding>() {
         }
         binding.layoutHeader.tvHeading.text="Locate your parcel"
 
+        setData()
+
+
+    }
+
+    fun setData() {
+        val original = listOf("orange", "orange","orange",)
+
+        val adapter = LocatParcelAdapter(this, original)
+        binding.rvData.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvData.adapter = adapter
     }
 }

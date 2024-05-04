@@ -21,8 +21,6 @@ class RecentTransactionAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        holder.binding.tvDate.text=dataList[position].date
-
-
     }
 
     override fun getItemCount(): Int {

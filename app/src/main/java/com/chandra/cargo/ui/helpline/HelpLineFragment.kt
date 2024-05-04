@@ -49,6 +49,16 @@ class HelpLineFragment : BaseFragment<FragmentHelpLineBinding>() {
         binding.layoutHeader.tvHeading.text="Helpline and Grievance"
 
 
+
+        binding.layoutHelpLine.visibility=View.VISIBLE
+        binding.layoutGrievanceForm.visibility=View.GONE
+        binding.cvHelpline.strokeColor=mActivity.resources.getColor(R.color.purple,null)
+        binding.cvHelpline.strokeWidth=7
+        binding.cvGrievance.strokeColor=mActivity.resources.getColor(R.color.purple,null)
+        binding.cvGrievance.strokeWidth=3
+
+
+
         binding.cvHelpline.setOnClickListener {
             binding.layoutHelpLine.visibility=View.VISIBLE
             binding.layoutGrievanceForm.visibility=View.GONE

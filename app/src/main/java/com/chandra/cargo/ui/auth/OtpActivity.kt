@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.chandra.cargo.MainActivity
 import com.chandra.cargo.R
 import com.chandra.cargo.base.BaseActivity
+import com.chandra.cargo.common.Utils
 import com.chandra.cargo.databinding.ActivityOtpBinding
 
 class OtpActivity : BaseActivity<ActivityOtpBinding>() {
@@ -17,9 +18,23 @@ class OtpActivity : BaseActivity<ActivityOtpBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
+
      binding.btnVerify.setOnClickListener {
-         val intent= Intent(this,MainActivity::class.java)
-         startActivity(intent)
+         validation()
      }
+    }
+
+    private fun validation(){
+        val otp =binding.otpView.text.toString()
+
+        if (otp.length!=4){
+            Utils.showToast(this,"Please enter otp")
+            return
+        }
+
+        val intent= Intent(this,MainActivity::class.java)
+        startActivity(intent)
+
     }
 }
