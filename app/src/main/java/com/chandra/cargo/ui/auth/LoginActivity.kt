@@ -9,10 +9,14 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chandra.cargo.base.BaseActivity
+import com.chandra.cargo.common.AppState
+import com.chandra.cargo.common.DialogUtils
 import com.chandra.cargo.common.Utils
 import com.chandra.cargo.common.Utils.validateNumber
 import com.chandra.cargo.databinding.ActivityLoginBinding
+import com.chandra.cargo.ui.annoucement.AnnouncementAdapter
 import com.rdd.rdd.utils.sharedPrefrence.AppPreferences
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,16 +28,18 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private lateinit var progress: Dialog
 
-    private val viewModel: LoginVM by lazy { ViewModelProvider(this)[LoginVM::class.java] }
+    private val viewModel: AuthViewModel by lazy { ViewModelProvider(this)[AuthViewModel::class.java] }
     private lateinit var appPreferences: AppPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        progress= DialogUtils.showProgress(this)
+        appPreferences=  AppPreferences.getInstance(this)
         binding.btnLogin.setOnClickListener {
             if (validation()) {
-                val intent = Intent(this, OtpActivity::class.java)
-                startActivity(intent)
+                viewModel.LoginAPI(binding.etMobile.text.toString())
+
             }
         }
 
@@ -42,10 +48,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s!!.startsWith("0", 0, false)) {
-                    binding.etMobile.text = Editable.Factory.getInstance().newEditable("") } }
+              binding.etMobile.text = Editable.Factory.getInstance().newEditable("") } }
             override fun afterTextChanged(s: Editable?) {}
         })
-
+        setUpViewModelObserver()
     }
 
     private fun validation(): Boolean {
@@ -67,5 +73,40 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         return true
     }
 
+ override  fun setUpViewModelObserver() {
+     super.setUpViewModelObserver()
+        viewModel.authResult.observe(this){response->
+            when(response){
+                is AppState.Loading ->{
+                    progress.show()
+                }
+
+                is AppState.APILoginSuccess ->{
+                    progress.dismiss()
+                    Toast.makeText(this,response.login.msg,Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, OtpActivity::class.java)
+                    intent.putExtra("mobile",binding.etMobile.text.toString())
+                    startActivity(intent)
+
+                }
+                is AppState.NoInternetConnection ->{
+                    progress.dismiss()
+                    Toast.makeText(this, "Please check your connection", Toast.LENGTH_SHORT).show()
+                }
+                is AppState.UnknownError ->{
+                    progress.dismiss()
+                    Toast.makeText(this, "An error occured", Toast.LENGTH_SHORT).show()
+                }
+                is AppState.SeverError ->{
+                    progress.dismiss()
+                    Toast.makeText(this, "ss", Toast.LENGTH_SHORT).show()
+
+
+                }
+                else -> {}
+            }
+
+        }
+    }
 
 }

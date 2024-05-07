@@ -206,7 +206,7 @@
             app:cardCornerRadius="10dp"
             android:layout_marginTop="20dp"
             android:elevation="1dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:strokeColor="@color/purple"
             app:cardBackgroundColor="@color/extra_light_purple"
            app:layout_constraintTop_toBottomOf="@+id/layout_1">
@@ -227,6 +227,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:textSize="16sp"/>
                 <TextView
+                    android:id="@+id/tv_helpLineNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"

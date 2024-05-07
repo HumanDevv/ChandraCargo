@@ -1,16 +1,21 @@
 package com.chandra.cargo.ui.annoucement
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chandra.cargo.R
 import com.chandra.cargo.base.BaseFragment
+import com.chandra.cargo.common.AppState
+import com.chandra.cargo.common.DialogUtils
 import com.chandra.cargo.databinding.FragmentAnnouncementBinding
-import com.chandra.cargo.ui.transaction.RecentTransaction
-import com.chandra.cargo.ui.transaction.RecentTransactionAdapter
+import com.rdd.rdd.utils.sharedPrefrence.AppPreferences
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,12 +27,18 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AnnouncementFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class AnnouncementFragment : BaseFragment<FragmentAnnouncementBinding>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var dataList2:ArrayList<Announcements>
+    lateinit var announcementList:List<AnnouncementX>
+    private lateinit var appPreferences : AppPreferences
+    private  lateinit var progress: Dialog
 
+    private val viewModel: AnnouncementViewModel by lazy {
+        ViewModelProvider(this)[AnnouncementViewModel::class.java]
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,20 +56,55 @@ class AnnouncementFragment : BaseFragment<FragmentAnnouncementBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        progress= DialogUtils.showProgress(mActivity)
+        appPreferences=  AppPreferences.getInstance(requireActivity())
         binding.layoutHeader.ivBack.setOnClickListener {
             mActivity.onBackPressedDispatcher.onBackPressed()
         }
+        binding.layoutHeader.ivImg.setImageDrawable(mActivity.getDrawable(R.drawable.announcement))
+
         binding.layoutHeader.tvHeading.text="Announcement"
 
 
-        dataList2 = ArrayList()
-        dataList2.add(Announcements("22,March"))
-        dataList2.add(Announcements("21,March"))
-        dataList2.add(Announcements("29,March"))
 
-        binding.rvAnnouncement.layoutManager = LinearLayoutManager(mActivity,  LinearLayoutManager.VERTICAL, false)
-        binding.rvAnnouncement.adapter = AnnouncementAdapter(mActivity, dataList2)
+        viewModel.announcementListAPI("")
+
+        setUpViewModelObserver()
+    }
+    private fun setUpViewModelObserver() {
+        viewModel.announcementListResult.observe(mActivity){response->
+            when(response){
+                is AppState.Loading ->{
+                    progress.show()
+                }
+
+                is AppState.AnnouncementSuccess ->{
+                    progress.dismiss()
+                    announcementList=response.announcement.announcementList
+                    val announcementAdapter = AnnouncementAdapter(requireActivity())
+                    binding.rvAnnouncement.layoutManager = LinearLayoutManager(mActivity,  LinearLayoutManager.VERTICAL, false)
+                    binding.rvAnnouncement.adapter = announcementAdapter
+                    announcementAdapter.submitList(announcementList)
+
+                }
+                is AppState.NoInternetConnection ->{
+                    progress.dismiss()
+                    Toast.makeText(mActivity, "Please check your connection", Toast.LENGTH_SHORT).show()
+                }
+                is AppState.UnknownError ->{
+                    progress.dismiss()
+                    Toast.makeText(mActivity, "An error occured", Toast.LENGTH_SHORT).show()
+                }
+                is AppState.SeverError ->{
+                    progress.dismiss()
+                    Toast.makeText(mActivity, "ss", Toast.LENGTH_SHORT).show()
+
+
+                }
+                else -> {}
+            }
+
+        }
     }
 
 }

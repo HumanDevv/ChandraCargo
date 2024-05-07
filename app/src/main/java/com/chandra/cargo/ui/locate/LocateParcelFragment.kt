@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chandra.cargo.R
 import com.chandra.cargo.base.BaseFragment
 import com.chandra.cargo.databinding.FragmentLocateParcelBinding
 import com.chandra.cargo.ui.dashboard.LocatParcelAdapter
@@ -47,6 +48,7 @@ class LocateParcelFragment : BaseFragment<FragmentLocateParcelBinding>() {
             mActivity.onBackPressedDispatcher.onBackPressed()
         }
         binding.layoutHeader.tvHeading.text="Locate your parcel"
+        binding.layoutHeader.ivImg.setImageDrawable(mActivity.getDrawable(R.drawable.tracking))
 
         setData()
 

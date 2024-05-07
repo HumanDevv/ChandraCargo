@@ -48,7 +48,7 @@ object AppModule {
     @Provides
     fun providesNewBeApiService(okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl("http://62.171.135.40:4002/")
+            .baseUrl("https://shreenathtechnologies.com/csy/API/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(ApiService::class.java)

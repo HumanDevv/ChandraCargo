@@ -5,33 +5,41 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.chandra.cargo.base.BaseAdapter
+import com.chandra.cargo.base.BaseViewHolder
 import com.chandra.cargo.databinding.ListAnnouncementBinding
-import com.chandra.cargo.databinding.ListTransactionBinding
 
 
 class AnnouncementAdapter(
-    val context: Context,
-    private val dataList: ArrayList<Announcements>
-) :
-    RecyclerView.Adapter<AnnouncementAdapter.ViewHolder>() {
+    val context: Context, ) :
+    BaseAdapter<AnnouncementX,ListAnnouncementBinding>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListAnnouncementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    override fun createBinding(inflater: LayoutInflater, parent: ViewGroup): ListAnnouncementBinding {
+        return ListAnnouncementBinding.inflate(inflater, parent, false)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       holder.binding.tvDate.text=dataList[position].date
-
-
+    override fun onBind(binding: ListAnnouncementBinding, item: AnnouncementX) {
+        binding.tvAnnounceBy.text=item.name
+        binding.tvDate.text=item.date
+        binding.tvTitle.text=item.title
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
+
+
+    override fun createViewHolder(binding: ListAnnouncementBinding): BaseViewHolder<AnnouncementX, ListAnnouncementBinding> {
+        return ExampleViewHolder(binding)
     }
 
-   inner class ViewHolder( val binding: ListAnnouncementBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ExampleViewHolder(override val binding: ListAnnouncementBinding) :
+        BaseViewHolder<AnnouncementX, ListAnnouncementBinding>(binding) {
 
+        override fun bind(item: AnnouncementX) {
+
+        }
     }
+
+   /* override fun getItemCount(): Int {
+        return AnnouncementX!!.size
+    }*/
 }
 

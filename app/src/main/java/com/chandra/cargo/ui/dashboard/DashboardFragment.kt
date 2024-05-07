@@ -45,6 +45,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.layoutHeader.ivBack.visibility=View.GONE
+        binding.layoutHeader.ivImg.visibility=View.GONE
         binding.layoutHeader.tvHeading.text="Dashboard"
 
 

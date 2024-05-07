@@ -8,4 +8,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="amount">₹5000</string>
     <string name="save">Save</string>
+
+    <string name="remark">Remark</string>
+
+    <string name="password">Password</string>
+    <string name="log_out">Log out</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure_want_to_logout">Are you sure want to logout?</string>
+    <string name="work_Details">Work Detail</string>
+
+
+    <string name="we_will_need_your_camera_to_n_give_you_better_experience">We will need to turn on your camera to\n upload  delivery proof.</string>
+
+    <string name="sure_i_d_like_that">Sure, I\'d like that</string>
+    <string name="allow_your_camera">Allow your camera</string>
+    <string name="not_now">Not Now</string>
+    <string name="case_Details">Case Details</string>
 </resources>
