@@ -61,23 +61,19 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/cv_select"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Select City"
+            android:layout_height="50dp"
+            android:hint="Search City"
             android:layout_marginTop="20dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:shapeAppearance="@style/Rounded"
             app:layout_constraintTop_toBottomOf="@+id/layout_selectWise"
             >
-
             <AutoCompleteTextView
-                android:id="@+id/autocomplete_title"
+                android:id="@+id/textInput_city"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:editable="false"
                 android:paddingStart="15dp"
-                android:background="@null" />
+             />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
