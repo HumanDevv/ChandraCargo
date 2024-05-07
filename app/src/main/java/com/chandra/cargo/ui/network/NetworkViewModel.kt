@@ -9,6 +9,7 @@ import com.chandra.cargo.network.ApiHelper
 import com.chandra.cargo.network.errorHandel.BaseError
 import com.chandra.cargo.ui.network.model.City
 import com.chandra.cargo.ui.network.model.Network
+import com.chandra.cargo.ui.network.model.NetworkDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,6 +21,9 @@ class NetworkViewModel @Inject constructor(private val apiHelper: ApiHelper) : B
 
     private val _networkResult = MutableLiveData<AppState>()
     val networkResult: LiveData<AppState> = _networkResult
+
+    private val _viewnetworkResult = MutableLiveData<AppState>()
+    val viewnetworkResult: LiveData<AppState> = _viewnetworkResult
 
     fun CityAPI() {
         launchOnBackground {
@@ -34,6 +38,15 @@ class NetworkViewModel @Inject constructor(private val apiHelper: ApiHelper) : B
             _authResult.postValue(AppState.Loading)
             val response = apiHelper.ourNetworks(cityId)
             handleNetworkResponse(response)
+        }
+    }
+
+
+    fun viewNetworkAPI(cityId:String) {
+        launchOnBackground {
+            _viewnetworkResult.postValue(AppState.Loading)
+            val response = apiHelper.ourNetworksDetails(cityId)
+            handleNetworkDetailsResponse(response)
         }
     }
 
@@ -81,6 +94,31 @@ class NetworkViewModel @Inject constructor(private val apiHelper: ApiHelper) : B
                         is BaseError.NetworkError -> _networkResult.postValue(AppState.NoInternetConnection)
                         is BaseError.ServerError -> response.error.responseBody?.let {
                             _networkResult.postValue(AppState.SeverError(it))
+                        }
+                        else -> {}
+                    }
+                }
+                else -> {}
+            }
+        }
+    }
+    private fun handleNetworkDetailsResponse(response: BaseResponse<NetworkDetails>) {
+        launchOnUI {
+            when (response) {
+                is BaseResponse.Success -> {
+                    if (response.data.status) {
+                        _viewnetworkResult.postValue(AppState.NetworkDetailSuccess(response.data))
+
+                    } else {
+                        _viewnetworkResult.postValue(AppState.NetworkDetailSuccess(response.data))
+                    }
+                }
+                is BaseResponse.Error -> {
+                    when (response.error) {
+                        is BaseError.UnknownError -> _viewnetworkResult.postValue(AppState.UnknownError)
+                        is BaseError.NetworkError -> _viewnetworkResult.postValue(AppState.NoInternetConnection)
+                        is BaseError.ServerError -> response.error.responseBody?.let {
+                            _viewnetworkResult.postValue(AppState.SeverError(it))
                         }
                         else -> {}
                     }

@@ -1,11 +1,13 @@
 package com.chandra.cargo.common
 
+import com.chandra.cargo.network.CommonResponse
 import com.chandra.cargo.ui.annoucement.Announcement
 import com.chandra.cargo.ui.auth.model.Login
 import com.chandra.cargo.ui.auth.model.OTP
 import com.chandra.cargo.ui.helpline.model.Helpline
 import com.chandra.cargo.ui.network.model.City
 import com.chandra.cargo.ui.network.model.Network
+import com.chandra.cargo.ui.network.model.NetworkDetails
 import com.chandra.cargo.ui.transaction.model.RecentTransaction
 
 
@@ -23,7 +25,8 @@ sealed class AppState {
     data class HelplineSuccess(val helpLine: Helpline) : AppState()
     data class CitySuccess(val city: City) : AppState()
     data class NetworkSuccess(val network: Network) : AppState()
-   // data class APICheckLoginSuccess(val login: CheckLoginResponce) : AppState()
+    data class NetworkDetailSuccess(val network: NetworkDetails) : AppState()
+    data class GrievanceSuccess(val grievance: CommonResponse) : AppState()
 
 
 

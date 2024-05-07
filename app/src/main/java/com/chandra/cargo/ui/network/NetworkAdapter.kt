@@ -14,18 +14,19 @@ import com.chandra.cargo.ui.network.model.Citylist
 
 
 class NetworkAdapter(
-    val context: Context,
-) :
-    BaseAdapter<Citylist, ListNetworkBinding>() {
+    val context: Context, ) :
+    BaseAdapter<Citylist,ListNetworkBinding>() {
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup): ListNetworkBinding {
         return ListNetworkBinding.inflate(inflater, parent, false)
     }
 
     override fun onBind(binding: ListNetworkBinding, item: Citylist) {
-        binding.tvName.text = item.City
-        binding.tvNo.text = item.counter.toString()
+    binding.tvName.text=item.City
+    binding.tvNo.text=item.counter.toString()
+
     }
+
 
 
     override fun createViewHolder(binding: ListNetworkBinding): BaseViewHolder<Citylist, ListNetworkBinding> {
@@ -42,11 +43,20 @@ class NetworkAdapter(
             } else {
                 binding.view2.visibility = View.VISIBLE
             }
+
+            itemView.setOnClickListener {
+                val intent=Intent(context,ViewNetworkActivity::class.java)
+                intent.putExtra("cityName",item.City)
+                intent.putExtra("counter",item.counter.toString())
+                intent.putExtra("cityId",item.CityId)
+                context.startActivity(intent)
+
+            }
         }
     }
 
-    /* override fun getItemCount(): Int {
-         return AnnouncementX!!.size
-     }*/
+   /* override fun getItemCount(): Int {
+        return AnnouncementX!!.size
+    }*/
 }
 

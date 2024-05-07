@@ -9,6 +9,7 @@ import com.chandra.cargo.ui.auth.model.OTP
 import com.chandra.cargo.ui.helpline.model.Helpline
 import com.chandra.cargo.ui.network.model.City
 import com.chandra.cargo.ui.network.model.Network
+import com.chandra.cargo.ui.network.model.NetworkDetails
 import com.chandra.cargo.ui.transaction.model.RecentTransaction
 import com.rdd.rdd.common.errorHandel.ErrorHandler
 import javax.inject.Inject
@@ -80,6 +81,31 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService,
     override suspend fun ourNetworks(cityId: String): BaseResponse<Network> {
         return try {
             val helpLineResult=apiService.ourNetworks(cityId)
+            BaseResponse.Success(helpLineResult)
+        } catch (e: Exception) {
+            val errorType = errorHandler.getErrorType(e)
+            BaseResponse.Error(errorType)
+        }
+    }
+
+    override suspend fun ourNetworksDetails(cityId: String): BaseResponse<NetworkDetails> {
+        return try {
+            val helpLineResult=apiService.ourNetworkDetails(cityId)
+            BaseResponse.Success(helpLineResult)
+        } catch (e: Exception) {
+            val errorType = errorHandler.getErrorType(e)
+            BaseResponse.Error(errorType)
+        }
+    }
+
+    override suspend fun grievance(
+        userId: String,
+        subject: String,
+        title: String,
+        message: String
+    ): BaseResponse<CommonResponse> {
+        return try {
+            val helpLineResult=apiService.grievance(userId, subject, title, message)
             BaseResponse.Success(helpLineResult)
         } catch (e: Exception) {
             val errorType = errorHandler.getErrorType(e)
