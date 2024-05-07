@@ -71,11 +71,19 @@ class ViewNetworkActivity : BaseActivity<ActivityViewNetworkBinding>() {
                     binding.tvCityName.text="City: "+response.network.Cityname
                     binding.tvCounter.text="Counters: "+response.network.CityCounter
                     if (response.network.counterList.isNotEmpty()){
+
+                        binding.layoutResult.visibility = View.VISIBLE
+                        binding.rlNoDataFound.visibility = View.GONE
+
                         val networkDetailsAdapter = NetworkDetailAdapter(this)
                         binding.rvStat.layoutManager =
                             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                         binding.rvStat.adapter = networkDetailsAdapter
                         networkDetailsAdapter.submitList(response.network.counterList)
+                    }
+                    else{
+                        binding.layoutResult.visibility = View.GONE
+                        binding.rlNoDataFound.visibility = View.VISIBLE
                     }
                     progress.dismiss()
                 }

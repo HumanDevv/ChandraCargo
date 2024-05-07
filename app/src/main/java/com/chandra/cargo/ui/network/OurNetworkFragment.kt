@@ -41,9 +41,9 @@ class OurNetworkFragment : BaseFragment<FragmentOurNetworkBinding>() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var appPreferences : AppPreferences
-    private  lateinit var progress: Dialog
-    private  lateinit var userID: String
+    private lateinit var appPreferences: AppPreferences
+    private lateinit var progress: Dialog
+    private lateinit var userID: String
     var cityList: List<CityX>? = null
 
     private val viewModel: NetworkViewModel by lazy {
@@ -62,37 +62,37 @@ class OurNetworkFragment : BaseFragment<FragmentOurNetworkBinding>() {
     var stateName: String = ""
 
 
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progress= DialogUtils.showProgress(mActivity)
-        appPreferences=  AppPreferences.getInstance(requireActivity())
-        userID=appPreferences.getString(Constant.userId,"")
+        progress = DialogUtils.showProgress(mActivity)
+        appPreferences = AppPreferences.getInstance(requireActivity())
+        userID = appPreferences.getString(Constant.userId, "")
 
         binding.layoutHeader.ivBack.setOnClickListener {
             mActivity.onBackPressedDispatcher.onBackPressed()
         }
-        binding.layoutHeader.tvHeading.text="Our Networks"
+        binding.layoutHeader.tvHeading.text = "Our Networks"
         binding.layoutHeader.ivImg.setImageDrawable(mActivity.resources.getDrawable(R.drawable.network))
 
 
-        binding.autocompleteTitle.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
-            //   val selectedItem = parent.getItemAtPosition(position) as String
-            val selectedState = cityList?.get(position)
-            // Handle the selected Campaign object
-            Log.d("Spinner", "Selected item: $selectedState")
-            // Access the properties of selectedCampaign as needed
+        binding.autocompleteTitle.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, _, position, _ ->
+                //   val selectedItem = parent.getItemAtPosition(position) as String
+                val selectedState = cityList?.get(position)
+                // Handle the selected Campaign object
+                Log.d("Spinner", "Selected item: $selectedState")
+                // Access the properties of selectedCampaign as needed
 
-            stateId = selectedState!!.CityId
-            stateName = selectedState.City
-            viewModel.NetworkAPI(stateId)
-            setUpViewModelObserver()
+                stateId = selectedState!!.CityId
+                stateName = selectedState.City
+                viewModel.NetworkAPI(stateId)
+                setUpViewModelObserver()
 
-        }
+            }
 
 
-viewModel.CityAPI()
+        viewModel.CityAPI()
         viewModel.NetworkAPI("")
 
         setUpViewModelObserver()
@@ -101,80 +101,89 @@ viewModel.CityAPI()
 
 
     private fun setUpViewModelObserver() {
-        viewModel.authResult.observe(mActivity){response->
-            when(response){
-                is AppState.Loading ->{
+        viewModel.authResult.observe(mActivity) { response ->
+            when (response) {
+                is AppState.Loading -> {
                     progress.show()
                 }
 
-                is AppState.CitySuccess ->{
-                    cityList=response.city.City
+                is AppState.CitySuccess -> {
+                    cityList = response.city.City
                     val stateName = cityList!!.map { it.City }
 
                     // Create ArrayAdapter with shopNames
-                    val adapter = ArrayAdapter(requireContext(), R.layout.state_spinner_item, stateName)
+                    val adapter =
+                        ArrayAdapter(requireContext(), R.layout.state_spinner_item, stateName)
                     // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     // Set adapter to the spinner
                     binding.autocompleteTitle.setAdapter(adapter)
                     progress.dismiss()
                 }
-                is AppState.NoInternetConnection ->{
+
+                is AppState.NoInternetConnection -> {
                     progress.dismiss()
-                    Toast.makeText(mActivity, "Please check your connection", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mActivity, "Please check your connection", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
-                is AppState.UnknownError ->{
+                is AppState.UnknownError -> {
                     progress.dismiss()
                     Toast.makeText(mActivity, "An error occured", Toast.LENGTH_SHORT).show()
                 }
 
-                is AppState.SeverError ->{
+                is AppState.SeverError -> {
                     progress.dismiss()
                     Toast.makeText(mActivity, "ss", Toast.LENGTH_SHORT).show()
                 }
+
                 else -> {}
             }
 
         }
     }
+
     private fun setUpNetworkViewModelObserver() {
-        viewModel.networkResult.observe(mActivity){response->
-            when(response){
-                is AppState.Loading ->{
+        viewModel.networkResult.observe(mActivity) { response ->
+            when (response) {
+                is AppState.Loading -> {
                     progress.show()
                 }
 
                 is AppState.NetworkSuccess -> {
                     progress.dismiss()
 
-                    if (response.network.Citylist.size != 0){
+                    if (response.network.Citylist.size != 0) {
                         binding.tvHeadings.visibility = View.VISIBLE
                         binding.layoutResult.visibility = View.VISIBLE
-                    val announcementAdapter = NetworkAdapter(requireActivity())
-                    binding.rvStat.layoutManager =
-                        LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
-                    binding.rvStat.adapter = announcementAdapter
-                    announcementAdapter.submitList(response.network.Citylist)
-                }
-                    else{
+                        binding.rlNoDataFound.visibility = View.GONE
+                        val announcementAdapter = NetworkAdapter(requireActivity())
+                        binding.rvStat.layoutManager =
+                            LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
+                        binding.rvStat.adapter = announcementAdapter
+                        announcementAdapter.submitList(response.network.Citylist)
+                    } else {
                         binding.tvHeadings.visibility = View.GONE
-                        binding.layoutResult.visibility = View.VISIBLE
+                        binding.layoutResult.visibility = View.GONE
+                        binding.rlNoDataFound.visibility = View.VISIBLE
                     }
                 }
-                is AppState.NoInternetConnection ->{
+
+                is AppState.NoInternetConnection -> {
                     progress.dismiss()
-                    Toast.makeText(mActivity, "Please check your connection", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mActivity, "Please check your connection", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
-                is AppState.UnknownError ->{
+                is AppState.UnknownError -> {
                     progress.dismiss()
                     Toast.makeText(mActivity, "An error occured", Toast.LENGTH_SHORT).show()
                 }
 
-                is AppState.SeverError ->{
+                is AppState.SeverError -> {
                     progress.dismiss()
                     Toast.makeText(mActivity, "ss", Toast.LENGTH_SHORT).show()
                 }
+
                 else -> {}
             }
 
