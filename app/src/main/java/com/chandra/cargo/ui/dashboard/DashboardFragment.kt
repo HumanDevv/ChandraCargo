@@ -37,34 +37,37 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
 
-    override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentDashboardBinding {
+    override fun getBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentDashboardBinding {
         return FragmentDashboardBinding.inflate(layoutInflater)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.layoutHeader.ivBack.visibility=View.GONE
-        binding.layoutHeader.ivImg.visibility=View.GONE
-        binding.layoutHeader.tvHeading.text="Dashboard"
+        binding.layoutHeader.ivBack.visibility = View.GONE
+        binding.layoutHeader.ivImg.visibility = View.GONE
+        binding.layoutHeader.tvHeading.text = "Dashboard"
 
 
         binding.cvRecentTransaction.setOnClickListener {
-            mActivity.replaceFragment(true,RecentTransactionFragment())
+            mActivity.replaceFragment(true, RecentTransactionFragment())
         }
 
         binding.cvLocate.setOnClickListener {
-            mActivity.replaceFragment(true,LocateParcelFragment())
+            mActivity.replaceFragment(true, LocateParcelFragment())
         }
         binding.cvNetwork.setOnClickListener {
-            mActivity.replaceFragment(true,OurNetworkFragment())
+            mActivity.replaceFragment(true, OurNetworkFragment())
         }
 
         binding.cvAnnouncement.setOnClickListener {
-            mActivity.replaceFragment(true,AnnouncementFragment())
+            mActivity.replaceFragment(true, AnnouncementFragment())
         }
         binding.cvHelpline.setOnClickListener {
-            mActivity.replaceFragment(true,HelpLineFragment())
+            mActivity.replaceFragment(true, HelpLineFragment())
         }
     }
 }

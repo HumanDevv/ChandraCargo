@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.chandra.cargo.MainActivity
@@ -24,7 +25,7 @@ class OtpActivity : BaseActivity<ActivityOtpBinding>() {
     }
 
     private lateinit var progress: Dialog
-    lateinit var mobile:String
+    lateinit var mobile: String
 
     private val viewModel: AuthViewModel by lazy { ViewModelProvider(this)[AuthViewModel::class.java] }
     private lateinit var appPreferences: AppPreferences
@@ -32,35 +33,38 @@ class OtpActivity : BaseActivity<ActivityOtpBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        progress= DialogUtils.showProgress(this)
-        appPreferences=  AppPreferences.getInstance(this)
-        mobile=intent.getStringExtra("mobile")!!
 
-     binding.btnVerify.setOnClickListener {
-         validation()
-     }
+        Log.d("activityLife2","activityLife2  onCreate")
+
+        progress = DialogUtils.showProgress(this)
+        appPreferences = AppPreferences.getInstance(this)
+        mobile = intent.getStringExtra("mobile")!!
+
+        binding.btnVerify.setOnClickListener {
+            validation()
+        }
     }
 
-    private fun validation(){
-        val otp =binding.otpView.text.toString()
+    private fun validation() {
+        val otp = binding.otpView.text.toString()
 
-        if (otp.length!=4){
-            Utils.showToast(this,"Please enter otp")
+        if (otp.length != 4) {
+            Utils.showToast(this, "Please enter otp")
             return
         }
-            viewModel.OTPAPI(mobile,otp)
+        viewModel.OTPAPI(mobile, otp)
         setUpViewModelObserver()
     }
 
-    override  fun setUpViewModelObserver() {
+    override fun setUpViewModelObserver() {
         super.setUpViewModelObserver()
-        viewModel.otpResult.observe(this){response->
-            when(response){
-                is AppState.Loading ->{
+        viewModel.otpResult.observe(this) { response ->
+            when (response) {
+                is AppState.Loading -> {
                     progress.show()
                 }
 
-                is AppState.OTPSuccess ->{
+                is AppState.OTPSuccess -> {
                     progress.dismiss()
                     if (response.otp.status) {
                         Toast.makeText(this, response.otp.msg, Toast.LENGTH_SHORT).show()
@@ -68,30 +72,62 @@ class OtpActivity : BaseActivity<ActivityOtpBinding>() {
                         appPreferences.saveString(Constant.userId, response.otp.userId)
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
-                    }
-                    else{
+                    } else {
                         Toast.makeText(this, response.otp.msg, Toast.LENGTH_SHORT).show()
-
                     }
                 }
-                is AppState.NoInternetConnection ->{
+
+                is AppState.NoInternetConnection -> {
                     progress.dismiss()
                     Toast.makeText(this, "Please check your connection", Toast.LENGTH_SHORT).show()
                 }
-                is AppState.UnknownError ->{
+
+                is AppState.UnknownError -> {
                     progress.dismiss()
                     Toast.makeText(this, "An error occured", Toast.LENGTH_SHORT).show()
                 }
-                is AppState.SeverError ->{
+
+                is AppState.SeverError -> {
                     progress.dismiss()
                     Toast.makeText(this, "ss", Toast.LENGTH_SHORT).show()
 
 
                 }
+
                 else -> {}
             }
 
         }
+    }
+
+    override fun onStart() {
+        Log.d("activityLife2","activityLife2  onStart")
+        super.onStart()
+    }
+
+    override fun onPause() {
+        Log.d("activityLife2","activityLife2  onPause")
+        super.onPause()
+    }
+
+    override fun onResume() {
+        Log.d("activityLife2","activityLife2  onResume")
+        super.onResume()
+    }
+
+    override fun onStop() {
+        Log.d("activityLife2","activityLife2  onStop")
+        super.onStop()
+    }
+
+    override fun onRestart() {
+        Log.d("activityLife2","activityLife2  onRestart")
+        super.onRestart()
+    }
+
+    override fun onDestroy() {
+        Log.d("activityLife2","activityLife2  onDestroy")
+        super.onDestroy()
     }
 
 }

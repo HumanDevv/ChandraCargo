@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
@@ -34,8 +35,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        Log.d("activityLife1","activityLife  onCreate")
         progress= DialogUtils.showProgress(this)
         appPreferences=  AppPreferences.getInstance(this)
+
+
         binding.btnLogin.setOnClickListener {
             if (validation()) {
                 viewModel.LoginAPI(binding.etMobile.text.toString())
@@ -109,4 +114,33 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
+    override fun onStart() {
+        Log.d("activityLife1","activityLife  onStart")
+        super.onStart()
+    }
+
+    override fun onPause() {
+        Log.d("activityLife1","activityLife  onPause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d("activityLife1","activityLife  onStop")
+        super.onStop()
+    }
+
+    override fun onResume() {
+        Log.d("activityLife1","activityLife  onResume")
+        super.onResume()
+    }
+
+    override fun onRestart() {
+        Log.d("activityLife1","activityLife  onRestart")
+        super.onRestart()
+    }
+
+    override fun onDestroy() {
+        Log.d("activityLife1","activityLife  onDestroy")
+        super.onDestroy()
+    }
 }
