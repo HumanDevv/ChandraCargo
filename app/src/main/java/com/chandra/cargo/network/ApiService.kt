@@ -6,6 +6,7 @@ import com.chandra.cargo.ui.auth.model.OTP
 import com.chandra.cargo.ui.helpline.model.Helpline
 import com.chandra.cargo.ui.network.model.City
 import com.chandra.cargo.ui.network.model.Network
+import com.chandra.cargo.ui.network.model.NetworkDetails
 import com.chandra.cargo.ui.transaction.model.RecentTransaction
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -36,4 +37,12 @@ interface ApiService {
     @FormUrlEncoded
     @POST("ourNetworks.php")
     suspend fun ourNetworks(@Field("cityId") cityId:String): Network
+
+    @FormUrlEncoded
+    @POST("ourNetworDetails.php")
+    suspend fun ourNetworkDetails(@Field("cityId") cityId:String): NetworkDetails
+
+    @FormUrlEncoded
+    @POST("grievance.php")
+    suspend fun grievance(@Field("userId") userId:String,@Field("subject") subject:String,@Field("title") title:String,@Field("message") message:String): CommonResponse
 }

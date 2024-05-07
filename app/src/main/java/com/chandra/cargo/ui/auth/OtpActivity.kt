@@ -65,6 +65,7 @@ class OtpActivity : BaseActivity<ActivityOtpBinding>() {
                     if (response.otp.status) {
                         Toast.makeText(this, response.otp.msg, Toast.LENGTH_SHORT).show()
                         appPreferences.saveString(Constant.KEY_ISLOGIN, "true")
+                        appPreferences.saveString(Constant.userName, response.otp.name)
                         appPreferences.saveString(Constant.userId, response.otp.userId)
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)

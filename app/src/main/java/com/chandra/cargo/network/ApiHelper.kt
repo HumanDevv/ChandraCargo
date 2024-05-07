@@ -7,6 +7,7 @@ import com.chandra.cargo.ui.auth.model.OTP
 import com.chandra.cargo.ui.helpline.model.Helpline
 import com.chandra.cargo.ui.network.model.City
 import com.chandra.cargo.ui.network.model.Network
+import com.chandra.cargo.ui.network.model.NetworkDetails
 import com.chandra.cargo.ui.transaction.model.RecentTransaction
 import retrofit2.http.Field
 
@@ -21,6 +22,8 @@ interface ApiHelper {
     suspend fun cityList():BaseResponse<City>
 
     suspend fun ourNetworks(@Field("cityId") cityId:String): BaseResponse<Network>
+    suspend fun ourNetworksDetails(cityId: String): BaseResponse<NetworkDetails>
+    suspend fun grievance(@Field("userId") userId:String,@Field("subject") subject:String,@Field("title") title:String,@Field("message") message:String): BaseResponse<CommonResponse>
 
 
 }

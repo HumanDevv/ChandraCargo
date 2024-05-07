@@ -2,9 +2,7 @@ package com.chandra.cargo.ui.network
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.res.Resources
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,7 +21,6 @@ import com.chandra.cargo.databinding.FragmentOurNetworkBinding
 import com.chandra.cargo.ui.annoucement.AnnouncementAdapter
 import com.chandra.cargo.ui.helpline.HelpLineViewModel
 import com.chandra.cargo.ui.network.model.CityX
-import com.chandra.cargo.ui.network.model.Compaign
 import com.rdd.rdd.utils.sharedPrefrence.AppPreferences
 import com.rudraansh.rudraapay.utils.sharedPrefrence.Constant
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,24 +74,8 @@ class OurNetworkFragment : BaseFragment<FragmentOurNetworkBinding>() {
             mActivity.onBackPressedDispatcher.onBackPressed()
         }
         binding.layoutHeader.tvHeading.text="Our Networks"
-        binding.layoutHeader.ivImg.setImageDrawable(mActivity.getDrawable(R.drawable.network))
+        binding.layoutHeader.ivImg.setImageDrawable(mActivity.resources.getDrawable(R.drawable.network))
 
-     /*   binding.tvStateWise.setOnClickListener {
-
-            binding.cvSelect.hint="Select State"
-            binding.tvStateWise.setTextColor(resources.getColor(R.color.white))
-            binding.tvStateWise.backgroundTintList=resources.getColorStateList(R.color.purple,null)
-            binding.tvCityWise.setTextColor(resources.getColor(R.color.black))
-            binding.tvCityWise.backgroundTintList=resources.getColorStateList(R.color.light_purple,null)
-        }
-
-        binding.tvCityWise.setOnClickListener {
-            binding.cvSelect.hint="Select City"
-            binding.tvCityWise.setTextColor(resources.getColor(R.color.white))
-            binding.tvCityWise.backgroundTintList=resources.getColorStateList(R.color.purple,null)
-            binding.tvStateWise.setTextColor(resources.getColor(R.color.black))
-            binding.tvStateWise.backgroundTintList=resources.getColorStateList(R.color.light_purple,null)
-        }*/
 
         binding.autocompleteTitle.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
             //   val selectedItem = parent.getItemAtPosition(position) as String
@@ -106,6 +87,7 @@ class OurNetworkFragment : BaseFragment<FragmentOurNetworkBinding>() {
             stateId = selectedState!!.CityId
             stateName = selectedState.City
             viewModel.NetworkAPI(stateId)
+            setUpViewModelObserver()
 
         }
 
@@ -174,6 +156,10 @@ viewModel.CityAPI()
                     binding.rvStat.adapter = announcementAdapter
                     announcementAdapter.submitList(response.network.Citylist)
                 }
+                    else{
+                        binding.tvHeadings.visibility = View.GONE
+                        binding.layoutResult.visibility = View.VISIBLE
+                    }
                 }
                 is AppState.NoInternetConnection ->{
                     progress.dismiss()

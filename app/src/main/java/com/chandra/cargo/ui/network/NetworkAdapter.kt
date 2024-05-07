@@ -24,6 +24,7 @@ class NetworkAdapter(
     override fun onBind(binding: ListNetworkBinding, item: Citylist) {
     binding.tvName.text=item.City
     binding.tvNo.text=item.counter.toString()
+
     }
 
 
@@ -41,6 +42,15 @@ class NetworkAdapter(
                 binding.view2.visibility = View.GONE
             } else {
                 binding.view2.visibility = View.VISIBLE
+            }
+
+            itemView.setOnClickListener {
+                val intent=Intent(context,ViewNetworkActivity::class.java)
+                intent.putExtra("cityName",item.City)
+                intent.putExtra("counter",item.counter.toString())
+                intent.putExtra("cityId",item.CityId)
+                context.startActivity(intent)
+
             }
         }
     }

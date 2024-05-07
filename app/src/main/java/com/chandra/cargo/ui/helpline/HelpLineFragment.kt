@@ -83,10 +83,30 @@ class HelpLineFragment : BaseFragment<FragmentHelpLineBinding>() {
             binding.cvHelpline.strokeColor=mActivity.resources.getColor(R.color.purple,null)
             binding.cvHelpline.strokeWidth=3
         }
-
-            viewModel.helpLineAPI("")
+            binding.btnAddGrievance.setOnClickListener {
+                if (validation()){
+                    viewModel.grievanceAPI(userID,binding.etSubject.text.toString(),binding.etTitle.text.toString(),binding.etRemarks.text.toString())
+                }
+            }
+            viewModel.helpLineAPI(userID)
             setUpViewModelObserver()
+        setUpGrievanceViewModelObserver()
 
+    }
+  private  fun validation():Boolean{
+        if (binding.etSubject.text.toString().isEmpty()){
+            Toast.makeText(mActivity,"Please enter subject",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (binding.etTitle.text.toString().isEmpty()){
+            Toast.makeText(mActivity,"Please enter title",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (binding.etRemarks.text.toString().isEmpty()){
+            Toast.makeText(mActivity,"Please enter remark",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     private fun setUpViewModelObserver() {
@@ -119,5 +139,43 @@ class HelpLineFragment : BaseFragment<FragmentHelpLineBinding>() {
 
         }
     }
+
+    private fun setUpGrievanceViewModelObserver() {
+        viewModel.grievanceResult.observe(mActivity){response->
+            when(response){
+                is AppState.Loading ->{
+                    progress.show()
+                }
+
+                is AppState.GrievanceSuccess ->{
+                    Toast.makeText(mActivity,response.grievance.msg,Toast.LENGTH_SHORT).show()
+                    binding.etRemarks.text=null
+                    binding.etTitle.text=null
+                    binding.etSubject.text=null
+                    binding.etRemarks.clearFocus()
+                    binding.etSubject.clearFocus()
+                    binding.etTitle.clearFocus()
+                    progress.dismiss()
+                }
+                is AppState.NoInternetConnection ->{
+                    progress.dismiss()
+                    Toast.makeText(mActivity, "Please check your connection", Toast.LENGTH_SHORT).show()
+                }
+
+                is AppState.UnknownError ->{
+                    progress.dismiss()
+                    Toast.makeText(mActivity, "An error occured", Toast.LENGTH_SHORT).show()
+                }
+
+                is AppState.SeverError ->{
+                    progress.dismiss()
+                    Toast.makeText(mActivity, "ss", Toast.LENGTH_SHORT).show()
+                }
+                else -> {}
+            }
+
+        }
+    }
+
 
 }
