@@ -11,7 +11,7 @@ import com.chandra.cargo.databinding.ListAnnouncementBinding
 
 
 class AnnouncementAdapter(
-    val context: Context, ) :
+    val context: Context) :
     BaseAdapter<AnnouncementX,ListAnnouncementBinding>() {
 
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup): ListAnnouncementBinding {
@@ -21,7 +21,7 @@ class AnnouncementAdapter(
     override fun onBind(binding: ListAnnouncementBinding, item: AnnouncementX) {
         binding.tvAnnounceBy.text=item.name
         binding.tvDate.text=item.date
-        binding.tvTitle.text=item.title
+        binding.tvTitle.text=item.title.trim()
     }
 
 

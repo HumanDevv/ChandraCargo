@@ -49,7 +49,7 @@
                     android:textColor="@color/black3"
                     android:textColorHint="@color/gray"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Search products..."
+                    android:hint="Search Parcel..."
                     android:layout_marginStart="10dp"/>
 
             </LinearLayout>
